@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tableau Notes – Sameeksha 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy:       #0A1628;
+      --deep-blue:  #0D2149;
+      --mid-blue:   #1A3A6B;
+      --accent:     #1E5FC4;
+      --sky:        #2E8BFF;
+      --pale-sky:   #EBF3FF;
+      --white:      #FFFFFF;
+      --off-white:  #F7F9FD;
+      --text:       #0A1628;
+      --subtext:    #3B5280;
+      --border:     #C5D8F5;
+      --code-bg:    #EBF3FF;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      background: var(--white);
+      color: var(--text);
+      line-height: 1.75;
+    }
+
+    /* ── COVER ── */
+    .cover {
+      background: var(--navy);
+      color: var(--white);
+      padding: 80px 60px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cover::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(46,139,255,.25) 0%, transparent 70%);
+      top: -150px; right: -150px;
+    }
+    .cover::after {
+      content: '';
+      position: absolute;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(30,95,196,.3) 0%, transparent 70%);
+      bottom: -100px; left: -80px;
+    }
+    .cover-inner { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; }
+    .cover-tag {
+      display: inline-block;
+      font-size: 11px; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,.3);
+      padding: 6px 14px; border-radius: 20px;
+      margin-bottom: 32px; color: rgba(255,255,255,.8);
+    }
+    .cover h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(42px, 6vw, 72px);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .cover h1 span { color: var(--sky); }
+    .cover-sub {
+      font-size: 18px; color: rgba(255,255,255,.7);
+      margin-bottom: 40px; max-width: 520px;
+    }
+    .cover-meta {
+      display: flex; gap: 40px; flex-wrap: wrap;
+    }
+    .meta-item { display: flex; flex-direction: column; }
+    .meta-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,.5); }
+    .meta-value { font-size: 16px; font-weight: 600; color: var(--white); }
+
+    /* ── LAYOUT ── */
+    .container { max-width: 960px; margin: 0 auto; padding: 0 32px; }
+
+    /* ── TOC ── */
+    .toc {
+      background: var(--off-white);
+      border-left: 5px solid var(--accent);
+      padding: 36px 40px;
+      margin: 48px auto;
+      max-width: 960px;
+    }
+    .toc h2 { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--navy); margin-bottom: 18px; }
+    .toc ol { padding-left: 20px; }
+    .toc li { margin: 6px 0; }
+    .toc a { color: var(--accent); text-decoration: none; font-weight: 600; transition: color .2s; }
+    .toc a:hover { color: var(--sky); }
+
+    /* ── SECTION ── */
+    .section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+    .section:last-child { border-bottom: none; }
+
+    .section-header {
+      display: flex; align-items: center; gap: 16px; margin-bottom: 28px;
+    }
+    .section-num {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: var(--navy); color: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 15px; flex-shrink: 0;
+    }
+    .section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px; color: var(--navy);
+    }
+
+    .section h3 {
+      font-size: 17px; font-weight: 700;
+      color: var(--mid-blue);
+      margin: 24px 0 10px;
+      padding-left: 12px;
+      border-left: 3px solid var(--sky);
+    }
+
+    p { margin-bottom: 14px; color: var(--subtext); }
+
+    /* ── CARDS GRID ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px; margin: 20px 0;
+    }
+    .card {
+      background: var(--pale-sky);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--accent);
+      border-radius: 8px;
+      padding: 18px 16px;
+    }
+    .card-icon { font-size: 24px; margin-bottom: 8px; }
+    .card-title { font-weight: 700; font-size: 14px; color: var(--navy); margin-bottom: 6px; }
+    .card-desc { font-size: 13px; color: var(--subtext); line-height: 1.5; }
+
+    /* ── HIGHLIGHT BOX ── */
+    .highlight {
+      background: var(--navy);
+      color: var(--white);
+      border-radius: 10px;
+      padding: 28px 32px;
+      margin: 24px 0;
+    }
+    .highlight h4 { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: var(--sky); letter-spacing: 1px; }
+    .highlight p { color: rgba(255,255,255,.8); margin: 0; }
+
+    /* ── TABLE ── */
+    .tbl-wrap { overflow-x: auto; margin: 20px 0; border-radius: 8px; border: 1px solid var(--border); }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    thead tr { background: var(--navy); color: var(--white); }
+    thead th { padding: 13px 16px; text-align: left; font-weight: 600; letter-spacing: .5px; }
+    tbody tr:nth-child(even) { background: var(--pale-sky); }
+    tbody tr:nth-child(odd) { background: var(--white); }
+    tbody td { padding: 11px 16px; color: var(--subtext); border-bottom: 1px solid var(--border); }
+    tbody tr:last-child td { border-bottom: none; }
+
+    /* ── CODE ── */
+    code {
+      font-family: 'Fira Code', monospace;
+      background: var(--code-bg);
+      color: var(--accent);
+      padding: 2px 7px; border-radius: 4px;
+      font-size: 13px;
+    }
+    .code-block {
+      background: var(--navy);
+      color: #A8C7FA;
+      font-family: 'Fira Code', monospace;
+      font-size: 13px;
+      border-radius: 10px;
+      padding: 22px 24px;
+      margin: 16px 0;
+      overflow-x: auto;
+      line-height: 1.8;
+    }
+    .code-block .kw { color: #7DD3FC; font-weight: 700; }
+    .code-block .fn { color: #86EFAC; }
+    .code-block .str { color: #FCA5A5; }
+    .code-block .cm { color: #6B7280; font-style: italic; }
+
+    /* ── STEPS ── */
+    .steps { counter-reset: step; margin: 16px 0; }
+    .step {
+      display: flex; gap: 16px; margin-bottom: 18px; align-items: flex-start;
+    }
+    .step-num {
+      counter-increment: step;
+      width: 30px; height: 30px; border-radius: 50%;
+      background: var(--accent); color: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; flex-shrink: 0; margin-top: 2px;
+    }
+    .step-text { color: var(--subtext); }
+
+    /* ── BADGE LIST ── */
+    .badge-list { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .badge {
+      background: var(--mid-blue); color: var(--white);
+      padding: 5px 14px; border-radius: 20px;
+      font-size: 13px; font-weight: 600;
+    }
+    .badge.outline {
+      background: transparent; color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+
+    /* ── TIP BOX ── */
+    .tip {
+      display: flex; gap: 14px; align-items: flex-start;
+      background: var(--pale-sky); border: 1px solid var(--border);
+      border-left: 4px solid var(--sky);
+      border-radius: 8px; padding: 16px 18px; margin: 16px 0;
+    }
+    .tip-icon { font-size: 20px; flex-shrink: 0; }
+    .tip-text { font-size: 14px; color: var(--subtext); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,.5);
+      text-align: center;
+      padding: 36px 24px;
+      font-size: 13px;
+    }
+    footer strong { color: var(--sky); }
+
+    /* ── PRINT ── */
+    @media print {
+      .cover { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .highlight { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      thead tr { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════ COVER ══════════ -->
+<div class="cover">
+  <div class="cover-inner">
+    <div class="cover-tag">Complete Study Notes</div>
+    <h1>Tableau<br/><span>Data Visualisation</span></h1>
+    <p class="cover-sub">A comprehensive reference guide covering concepts, tools, charts, calculations, and best practices in Tableau.</p>
+    <div class="cover-meta">
+      <div class="meta-item">
+        <span class="meta-label">Prepared by</span>
+        <span class="meta-value">Sameeksha</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Year</span>
+        <span class="meta-value">2026</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Subject</span>
+        <span class="meta-value">Business Intelligence & Analytics</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ TABLE OF CONTENTS ══════════ -->
+<div class="toc container">
+  <h2>📋 Table of Contents</h2>
+  <ol>
+    <li><a href="#s1">Introduction to Tableau</a></li>
+    <li><a href="#s2">Tableau Products & Interface</a></li>
+    <li><a href="#s3">Connecting to Data Sources</a></li>
+    <li><a href="#s4">Data Types & Fields</a></li>
+    <li><a href="#s5">Charts & Visualisations</a></li>
+    <li><a href="#s6">Filters in Tableau</a></li>
+    <li><a href="#s7">Calculated Fields & LOD Expressions</a></li>
+    <li><a href="#s8">Table Calculations</a></li>
+    <li><a href="#s9">Parameters</a></li>
+    <li><a href="#s10">Dashboards & Stories</a></li>
+    <li><a href="#s11">Tableau Prep & Data Cleaning</a></li>
+    <li><a href="#s12">Publishing & Sharing</a></li>
+    <li><a href="#s13">Performance & Best Practices</a></li>
+    <li><a href="#s14">Quick Reference Cheat Sheet</a></li>
+  </ol>
+</div>
+
+<div class="container">
+
+  <!-- ══ SECTION 1 ══ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <h2>Introduction to Tableau</h2>
+    </div>
+    <p>Tableau is a leading <strong>Business Intelligence (BI)</strong> and data visualisation platform that allows users to connect, visualise, and share data insights without writing complex code. It transforms raw data into interactive, shareable dashboards.</p>
+
+    <h3>What is Tableau?</h3>
+    <div class="card-grid">
+      <div class="card"><div class="card-icon">📊</div><div class="card-title">Visualisation Tool</div><div class="card-desc">Drag-and-drop interface to create stunning charts and graphs.</div></div>
+      <div class="card"><div class="card-icon">🔗</div><div class="card-title">Data Connector</div><div class="card-desc">Connects to 70+ data sources including Excel, SQL, cloud data.</div></div>
+      <div class="card"><div class="card-icon">⚡</div><div class="card-title">In-Memory Engine</div><div class="card-desc">Uses VizQL engine for fast query processing and rendering.</div></div>
+      <div class="card"><div class="card-icon">🌐</div><div class="card-title">Collaboration</div><div class="card-desc">Publish & share dashboards on Tableau Server/Cloud/Public.</div></div>
+    </div>
+
+    <h3>History & Key Milestones</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Year</th><th>Milestone</th></tr></thead>
+        <tbody>
+          <tr><td>2003</td><td>Tableau Software founded at Stanford University</td></tr>
+          <tr><td>2010</td><td>Tableau Public launched (free version)</td></tr>
+          <tr><td>2013</td><td>IPO on NYSE; major enterprise adoption</td></tr>
+          <tr><td>2019</td><td>Acquired by Salesforce for $15.7 billion</td></tr>
+          <tr><td>2023</td><td>Tableau GPT & AI-powered analytics features introduced</td></tr>
+          <tr><td>2026</td><td>Deep Salesforce Einstein integration & advanced AI analytics</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Advantages of Tableau</h3>
+    <div class="badge-list">
+      <span class="badge">No coding required</span>
+      <span class="badge">Real-time analytics</span>
+      <span class="badge">Mobile-friendly dashboards</span>
+      <span class="badge">Large community</span>
+      <span class="badge">Drag-and-drop simplicity</span>
+      <span class="badge">Handles big data</span>
+      <span class="badge">Multiple data sources</span>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 2 ══ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <h2>Tableau Products & Interface</h2>
+    </div>
+
+    <h3>Tableau Product Suite</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Product</th><th>Description</th><th>Audience</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Tableau Desktop</strong></td><td>Authoring tool to create visualisations and dashboards</td><td>Analysts, Developers</td></tr>
+          <tr><td><strong>Tableau Server</strong></td><td>On-premise publishing & sharing platform</td><td>Enterprises</td></tr>
+          <tr><td><strong>Tableau Cloud</strong></td><td>Cloud-hosted version of Tableau Server (SaaS)</td><td>Businesses of all sizes</td></tr>
+          <tr><td><strong>Tableau Public</strong></td><td>Free platform; data is publicly visible</td><td>Students, Journalists</td></tr>
+          <tr><td><strong>Tableau Prep Builder</strong></td><td>Data cleaning & shaping tool</td><td>Data Engineers, Analysts</td></tr>
+          <tr><td><strong>Tableau Reader</strong></td><td>Free tool to view .twbx files (no editing)</td><td>Stakeholders</td></tr>
+          <tr><td><strong>Tableau Mobile</strong></td><td>View & interact with dashboards on mobile</td><td>Executives, Field teams</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Tableau Desktop Interface</h3>
+    <div class="card-grid">
+      <div class="card"><div class="card-icon">📂</div><div class="card-title">Data Pane</div><div class="card-desc">Shows Dimensions (blue) and Measures (green) from connected data.</div></div>
+      <div class="card"><div class="card-icon">📐</div><div class="card-title">Shelves</div><div class="card-desc">Rows, Columns, Pages, Filters, Marks shelves to build views.</div></div>
+      <div class="card"><div class="card-icon">🎨</div><div class="card-title">Marks Card</div><div class="card-desc">Controls Color, Size, Shape, Label, Detail, Tooltip of marks.</div></div>
+      <div class="card"><div class="card-icon">🗂️</div><div class="card-title">Sheets/Tabs</div><div class="card-desc">Worksheets, Dashboards, and Stories at the bottom tabs.</div></div>
+      <div class="card"><div class="card-icon">👀</div><div class="card-title">Show Me</div><div class="card-desc">Recommends chart types based on fields selected.</div></div>
+      <div class="card"><div class="card-icon">🔢</div><div class="card-title">Status Bar</div><div class="card-desc">Shows row/mark counts; quick summary statistics.</div></div>
+    </div>
+
+    <h3>Key File Types</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Extension</th><th>Name</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>.twb</code></td><td>Tableau Workbook</td><td>Workbook without embedded data (references external source)</td></tr>
+          <tr><td><code>.twbx</code></td><td>Tableau Packaged Workbook</td><td>Workbook with embedded data — shareable</td></tr>
+          <tr><td><code>.tds</code></td><td>Tableau Data Source</td><td>Connection info and field metadata</td></tr>
+          <tr><td><code>.tdsx</code></td><td>Packaged Data Source</td><td>TDS with embedded local data</td></tr>
+          <tr><td><code>.tde / .hyper</code></td><td>Tableau Data Extract</td><td>Local fast-query extract file</td></tr>
+          <tr><td><code>.tflow</code></td><td>Tableau Prep Flow</td><td>Tableau Prep Builder workflow file</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 3 ══ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <h2>Connecting to Data Sources</h2>
+    </div>
+    <p>Tableau can connect to a vast variety of data sources — from flat files to enterprise databases and cloud services.</p>
+
+    <h3>Types of Connections</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Connection Type</th><th>Examples</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>File-based</strong></td><td>Excel, CSV, JSON, PDF, XML, Spatial files</td><td>Local files; easy drag-and-drop</td></tr>
+          <tr><td><strong>Relational DB</strong></td><td>MySQL, PostgreSQL, SQL Server, Oracle</td><td>Live or Extract connection</td></tr>
+          <tr><td><strong>Cloud Services</strong></td><td>Google BigQuery, Snowflake, AWS Redshift</td><td>Fast cloud warehouses</td></tr>
+          <tr><td><strong>Web Connectors</strong></td><td>Google Analytics, Salesforce, Marketo</td><td>Web Data Connector (WDC)</td></tr>
+          <tr><td><strong>Statistical Files</strong></td><td>SAS, R, SPSS</td><td>Statistical analysis integration</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Live vs Extract Connection</h3>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">🔴</div>
+        <div class="card-title">Live Connection</div>
+        <div class="card-desc">Queries run directly on database in real-time. Always fresh data but depends on DB speed.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🟢</div>
+        <div class="card-title">Extract (.hyper)</div>
+        <div class="card-desc">Snapshot of data stored locally. Faster performance; can be scheduled to refresh.</div>
+      </div>
+    </div>
+
+    <h3>Data Joins & Relationships</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Inner Join</strong></td><td>Returns rows with matching values in both tables</td></tr>
+          <tr><td><strong>Left Join</strong></td><td>All rows from left table + matching rows from right</td></tr>
+          <tr><td><strong>Right Join</strong></td><td>All rows from right table + matching rows from left</td></tr>
+          <tr><td><strong>Full Outer Join</strong></td><td>All rows from both tables, nulls where no match</td></tr>
+          <tr><td><strong>Union</strong></td><td>Stacks rows from multiple tables with same structure</td></tr>
+          <tr><td><strong>Relationship</strong></td><td>Tableau's flexible multi-table model (context-aware joins)</td></tr>
+          <tr><td><strong>Blend</strong></td><td>Combines data from separate sources using a common dimension</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip">
+      <span class="tip-icon">💡</span>
+      <p class="tip-text"><strong>Best Practice:</strong> Use <strong>Relationships</strong> (Tableau 2020.2+) instead of joins when combining multiple tables — they preserve granularity and avoid row duplication issues.</p>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 4 ══ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <h2>Data Types & Fields</h2>
+    </div>
+
+    <h3>Data Types in Tableau</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Icon</th><th>Data Type</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>Abc</td><td>String / Text</td><td>Product Name, City</td></tr>
+          <tr><td>#</td><td>Number (Integer/Decimal)</td><td>Sales, Quantity, Profit</td></tr>
+          <tr><td>📅</td><td>Date</td><td>Order Date, Ship Date</td></tr>
+          <tr><td>🕐</td><td>Date & Time</td><td>Timestamp, Login Time</td></tr>
+          <tr><td>T/F</td><td>Boolean</td><td>Is Returned, Is Member</td></tr>
+          <tr><td>🌍</td><td>Geographic Role</td><td>Country, State, Latitude</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Dimensions vs Measures</h3>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">🔵</div>
+        <div class="card-title">Dimensions (Blue)</div>
+        <div class="card-desc">Categorical, qualitative fields. Used to slice data. E.g.: Region, Category, Customer Name.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🟢</div>
+        <div class="card-title">Measures (Green)</div>
+        <div class="card-desc">Numerical, quantitative fields. Aggregated by default. E.g.: Sales, Profit, Quantity.</div>
+      </div>
+    </div>
+
+    <h3>Discrete vs Continuous</h3>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">🔵</div>
+        <div class="card-title">Discrete (Blue Pill)</div>
+        <div class="card-desc">Individual, distinct values. Creates column/row headers. E.g.: Month names, Category.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🟢</div>
+        <div class="card-title">Continuous (Green Pill)</div>
+        <div class="card-desc">Unbroken range of values. Creates axes. E.g.: Continuous date axis, Sales range.</div>
+      </div>
+    </div>
+
+    <h3>Aggregation Functions</h3>
+    <div class="badge-list">
+      <span class="badge outline">SUM</span>
+      <span class="badge outline">AVG</span>
+      <span class="badge outline">COUNT</span>
+      <span class="badge outline">COUNTD</span>
+      <span class="badge outline">MIN</span>
+      <span class="badge outline">MAX</span>
+      <span class="badge outline">MEDIAN</span>
+      <span class="badge outline">STDEV</span>
+      <span class="badge outline">VAR</span>
+      <span class="badge outline">PERCENTILE</span>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 5 ══ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <h2>Charts & Visualisations</h2>
+    </div>
+    <p>Tableau offers a rich variety of chart types accessible through the <strong>Show Me</strong> panel or manually by placing fields on shelves.</p>
+
+    <h3>Common Chart Types</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Chart Type</th><th>Best For</th><th>Required Fields</th></tr></thead>
+        <tbody>
+          <tr><td>📊 Bar Chart</td><td>Comparing categories</td><td>1 Dimension + 1 Measure</td></tr>
+          <tr><td>📈 Line Chart</td><td>Trends over time</td><td>Date + Measure</td></tr>
+          <tr><td>🥧 Pie Chart</td><td>Part-to-whole (≤6 categories)</td><td>1 Dimension + 1 Measure</td></tr>
+          <tr><td>⬛ Scatter Plot</td><td>Correlation between two measures</td><td>2 Measures</td></tr>
+          <tr><td>🗺️ Map / Filled Map</td><td>Geographic data</td><td>Geographic field + optional Measure</td></tr>
+          <tr><td>🌲 Tree Map</td><td>Hierarchical part-to-whole</td><td>1–2 Dimensions + 1 Measure</td></tr>
+          <tr><td>📦 Box & Whisker</td><td>Distribution & outliers</td><td>1 Dimension + 1 Measure</td></tr>
+          <tr><td>🔥 Heat Map</td><td>Density / cross-tabular magnitude</td><td>2 Dimensions + 1 Measure</td></tr>
+          <tr><td>💧 Bubble Chart</td><td>Compare 3 variables</td><td>2 Measures + optional Dimension</td></tr>
+          <tr><td>🏁 Gantt Chart</td><td>Project timelines, duration</td><td>Date + Duration Measure</td></tr>
+          <tr><td>📊 Histogram</td><td>Frequency distribution</td><td>1 continuous Measure (binned)</td></tr>
+          <tr><td>🎯 Bullet Chart</td><td>Performance vs target</td><td>2 Measures + 1 Dimension</td></tr>
+          <tr><td>💨 Waterfall Chart</td><td>Running totals, changes</td><td>Measure with running total calc</td></tr>
+          <tr><td>📉 Area Chart</td><td>Cumulative trends over time</td><td>Date + Measure</td></tr>
+          <tr><td>🌐 Highlight Table</td><td>Cross-tab with colour encoding</td><td>2 Dimensions + 1 Measure</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Dual Axis & Combined Charts</h3>
+    <p>Use <strong>Dual Axis</strong> to overlay two measures on the same chart — right-click a measure on the rows/columns shelf and select <em>Dual Axis</em>. Synchronise axes via right-click → <em>Synchronise Axis</em>.</p>
+
+    <div class="tip">
+      <span class="tip-icon">📌</span>
+      <p class="tip-text"><strong>Tip:</strong> Use <strong>Combo Charts</strong> (e.g., Bar + Line on dual axis) to display actual vs. target or quantity vs. growth rate on the same view.</p>
+    </div>
+
+    <h3>Reference Lines, Bands & Distributions</h3>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-text">Right-click the axis in the view</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">Select "Add Reference Line, Band, or Box"</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text">Choose type: Line, Band, Distribution, or Box Plot</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-text">Set value to Constant, Measure Average, or Percentile</div></div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 6 ══ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <h2>Filters in Tableau</h2>
+    </div>
+    <p>Filters allow you to control which data is displayed. Tableau applies filters in a specific <strong>Order of Operations</strong>.</p>
+
+    <h3>Order of Operations (Filter Hierarchy)</h3>
+    <div class="highlight">
+      <h4>⬇ Filter Execution Order (Top = Applied First)</h4>
+      <p>
+        1. Extract Filters &nbsp;→&nbsp;
+        2. Data Source Filters &nbsp;→&nbsp;
+        3. Context Filters &nbsp;→&nbsp;
+        4. Top N / Condition Filters &nbsp;→&nbsp;
+        5. Dimension Filters &nbsp;→&nbsp;
+        6. Measure Filters &nbsp;→&nbsp;
+        7. Table Calculation Filters
+      </p>
+    </div>
+
+    <h3>Filter Types</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Filter Type</th><th>Description</th><th>Use Case</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Extract Filter</strong></td><td>Applied when creating the .hyper extract</td><td>Reduce extract size</td></tr>
+          <tr><td><strong>Data Source Filter</strong></td><td>Applied to the data source; shared across sheets</td><td>Row-level security</td></tr>
+          <tr><td><strong>Context Filter</strong></td><td>Creates a temporary table for dependent filters</td><td>Top N filtered from subset</td></tr>
+          <tr><td><strong>Dimension Filter</strong></td><td>Filters on discrete/categorical values</td><td>Show only Region = East</td></tr>
+          <tr><td><strong>Measure Filter</strong></td><td>Filters aggregated numeric values</td><td>Show SUM(Sales) > 10,000</td></tr>
+          <tr><td><strong>Table Calc Filter</strong></td><td>Filters after table calculations complete</td><td>Filter on rank or running total</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Quick Filters & Filter Controls</h3>
+    <div class="badge-list">
+      <span class="badge outline">Single Value (List)</span>
+      <span class="badge outline">Multiple Values (List)</span>
+      <span class="badge outline">Single Value (Dropdown)</span>
+      <span class="badge outline">Slider</span>
+      <span class="badge outline">Wildcard Match</span>
+      <span class="badge outline">Relative Date</span>
+      <span class="badge outline">Date Range</span>
+    </div>
+
+    <div class="tip">
+      <span class="tip-icon">💡</span>
+      <p class="tip-text"><strong>Apply to Worksheets:</strong> Right-click a filter → "Apply to Worksheets" → choose "All Using This Data Source" to share filters across sheets in a dashboard.</p>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 7 ══ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <h2>Calculated Fields & LOD Expressions</h2>
+    </div>
+
+    <h3>Calculated Fields</h3>
+    <p>Created via <em>Analysis → Create Calculated Field</em>. Written using Tableau's formula language with functions similar to Excel.</p>
+
+    <h3>Common Function Categories</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Category</th><th>Example Functions</th></tr></thead>
+        <tbody>
+          <tr><td>String</td><td><code>LEFT(), RIGHT(), MID(), LEN(), CONTAINS(), REPLACE(), TRIM()</code></td></tr>
+          <tr><td>Number</td><td><code>ROUND(), ABS(), CEILING(), FLOOR(), POWER(), SQRT(), ZN()</code></td></tr>
+          <tr><td>Date</td><td><code>DATEPART(), DATENAME(), DATEADD(), DATEDIFF(), TODAY(), NOW()</code></td></tr>
+          <tr><td>Logical</td><td><code>IF, IIF, CASE, IFNULL, ISNULL, ZN, AND, OR, NOT</code></td></tr>
+          <tr><td>Aggregate</td><td><code>SUM(), AVG(), COUNT(), COUNTD(), MIN(), MAX(), MEDIAN()</code></td></tr>
+          <tr><td>Type Conversion</td><td><code>STR(), INT(), FLOAT(), DATE(), DATETIME()</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Sample Calculated Fields</h3>
+    <div class="code-block">
+      <span class="cm">// Profit Margin</span><br/>
+      <span class="fn">SUM</span>([Profit]) / <span class="fn">SUM</span>([Sales])<br/><br/>
+      <span class="cm">// IF-THEN-ELSE</span><br/>
+      <span class="kw">IF</span> [Sales] > 10000 <span class="kw">THEN</span> <span class="str">"High"</span><br/>
+      <span class="kw">ELSEIF</span> [Sales] > 5000 <span class="kw">THEN</span> <span class="str">"Medium"</span><br/>
+      <span class="kw">ELSE</span> <span class="str">"Low"</span><br/>
+      <span class="kw">END</span><br/><br/>
+      <span class="cm">// CASE statement</span><br/>
+      <span class="kw">CASE</span> [Region]<br/>
+      &nbsp;&nbsp;<span class="kw">WHEN</span> <span class="str">"East"</span> <span class="kw">THEN</span> <span class="str">"Eastern"</span><br/>
+      &nbsp;&nbsp;<span class="kw">WHEN</span> <span class="str">"West"</span> <span class="kw">THEN</span> <span class="str">"Western"</span><br/>
+      &nbsp;&nbsp;<span class="kw">ELSE</span> <span class="str">"Other"</span><br/>
+      <span class="kw">END</span>
+    </div>
+
+    <h3>Level of Detail (LOD) Expressions</h3>
+    <p>LOD expressions let you control the granularity of aggregation independently of the view.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>LOD Type</th><th>Syntax</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><strong>FIXED</strong></td><td><code>{FIXED [Dim] : AGG([Measure])}</code></td><td>Computes at specified dimension level, ignores view filters</td></tr>
+          <tr><td><strong>INCLUDE</strong></td><td><code>{INCLUDE [Dim] : AGG([Measure])}</code></td><td>Adds dimension to current view level</td></tr>
+          <tr><td><strong>EXCLUDE</strong></td><td><code>{EXCLUDE [Dim] : AGG([Measure])}</code></td><td>Removes dimension from current view level</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="code-block">
+      <span class="cm">// Customer's first purchase date (FIXED LOD)</span><br/>
+      {<span class="kw">FIXED</span> [Customer ID] : <span class="fn">MIN</span>([Order Date])}<br/><br/>
+      <span class="cm">// Sales per city regardless of view (FIXED LOD)</span><br/>
+      {<span class="kw">FIXED</span> [City] : <span class="fn">SUM</span>([Sales])}<br/><br/>
+      <span class="cm">// Average sales including sub-category (INCLUDE LOD)</span><br/>
+      {<span class="kw">INCLUDE</span> [Sub-Category] : <span class="fn">AVG</span>([Sales])}
+    </div>
+  </div>
+
+  <!-- ══ SECTION 8 ══ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <div class="section-num">8</div>
+      <h2>Table Calculations</h2>
+    </div>
+    <p>Table Calculations are computed <strong>after</strong> data is aggregated and returned to Tableau. They operate on the values visible in the view.</p>
+
+    <h3>Common Table Calculations</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Calculation</th><th>Function</th><th>Use Case</th></tr></thead>
+        <tbody>
+          <tr><td>Running Total</td><td><code>RUNNING_SUM(SUM([Sales]))</code></td><td>Cumulative sales over time</td></tr>
+          <tr><td>Percent of Total</td><td><code>SUM([Sales]) / TOTAL(SUM([Sales]))</code></td><td>Share of each category</td></tr>
+          <tr><td>Difference</td><td><code>SUM([Sales]) - LOOKUP(SUM([Sales]),-1)</code></td><td>Month-over-month change</td></tr>
+          <tr><td>Percent Difference</td><td><code>(SUM([Sales])-LOOKUP(SUM([Sales]),-1)) / ABS(LOOKUP(SUM([Sales]),-1))</code></td><td>YoY % growth</td></tr>
+          <tr><td>Moving Average</td><td><code>WINDOW_AVG(SUM([Sales]),-2,0)</code></td><td>3-period rolling average</td></tr>
+          <tr><td>Rank</td><td><code>RANK(SUM([Sales]))</code></td><td>Rank by measure value</td></tr>
+          <tr><td>Index</td><td><code>INDEX()</code></td><td>Sequential row number</td></tr>
+          <tr><td>Size</td><td><code>SIZE()</code></td><td>Count of partitions</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Compute Using Options</h3>
+    <div class="badge-list">
+      <span class="badge outline">Table (Across)</span>
+      <span class="badge outline">Table (Down)</span>
+      <span class="badge outline">Table (Across then Down)</span>
+      <span class="badge outline">Pane (Across)</span>
+      <span class="badge outline">Pane (Down)</span>
+      <span class="badge outline">Cell</span>
+      <span class="badge outline">Specific Dimensions</span>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 9 ══ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <div class="section-num">9</div>
+      <h2>Parameters</h2>
+    </div>
+    <p>Parameters are dynamic, user-controlled variables that can replace constant values in calculations, filters, and reference lines.</p>
+
+    <h3>Creating a Parameter</h3>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-text">Right-click in the Data pane → Create Parameter</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">Set Name, Data Type (Integer, Float, String, Boolean, Date)</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text">Set Allowable values: All, List, or Range</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-text">Right-click parameter → Show Parameter Control to expose in view</div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-text">Reference in a calculated field: e.g., <code>SUM([Sales]) > [Min Sales Parameter]</code></div></div>
+    </div>
+
+    <h3>Common Parameter Use Cases</h3>
+    <div class="card-grid">
+      <div class="card"><div class="card-icon">🔢</div><div class="card-title">Top N Filter</div><div class="card-desc">Let users choose how many top items to display.</div></div>
+      <div class="card"><div class="card-icon">📏</div><div class="card-title">Reference Line Value</div><div class="card-desc">Dynamic target or benchmark line controlled by user.</div></div>
+      <div class="card"><div class="card-icon">🔀</div><div class="card-title">Measure Switcher</div><div class="card-desc">Switch between Sales, Profit, Quantity on a single chart.</div></div>
+      <div class="card"><div class="card-icon">📅</div><div class="card-title">Date Granularity</div><div class="card-desc">Switch between Day / Month / Quarter / Year views.</div></div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 10 ══ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <div class="section-num">10</div>
+      <h2>Dashboards & Stories</h2>
+    </div>
+
+    <h3>Dashboards</h3>
+    <p>A dashboard combines multiple sheets into a single interactive view. Created via <em>Dashboard → New Dashboard</em>.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Object Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>Worksheet</td><td>Add individual sheets from workbook</td></tr>
+          <tr><td>Horizontal/Vertical Layout</td><td>Container for arranging objects</td></tr>
+          <tr><td>Text</td><td>Static or dynamic text boxes</td></tr>
+          <tr><td>Image</td><td>Logo or static images</td></tr>
+          <tr><td>Web Page</td><td>Embed external URL</td></tr>
+          <tr><td>Blank</td><td>Spacer for layout control</td></tr>
+          <tr><td>Navigation</td><td>Button to navigate between sheets/dashboards</td></tr>
+          <tr><td>Export</td><td>Button to export data or image</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Dashboard Actions</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Action Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Filter Action</strong></td><td>Clicking a mark filters other sheets</td></tr>
+          <tr><td><strong>Highlight Action</strong></td><td>Highlights related marks across sheets</td></tr>
+          <tr><td><strong>URL Action</strong></td><td>Opens a URL with dynamic field values</td></tr>
+          <tr><td><strong>Go to Sheet Action</strong></td><td>Navigates to another sheet or dashboard</td></tr>
+          <tr><td><strong>Change Parameter</strong></td><td>A click updates a parameter value</td></tr>
+          <tr><td><strong>Change Set Values</strong></td><td>A click adds/removes values from a set</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Tableau Stories</h3>
+    <p>Stories string together multiple sheets/dashboards into a guided, narrative presentation. Each story point can have an annotation/caption. Created via <em>Story → New Story</em>.</p>
+
+    <div class="tip">
+      <span class="tip-icon">🎨</span>
+      <p class="tip-text"><strong>Design Tip:</strong> Use the <strong>Device Preview</strong> in the dashboard menu to optimise layouts for Phone, Tablet, and Desktop viewers.</p>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 11 ══ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <div class="section-num">11</div>
+      <h2>Tableau Prep & Data Cleaning</h2>
+    </div>
+    <p>Tableau Prep Builder is a visual, drag-and-drop data preparation tool for cleaning, shaping, and combining data before analysis in Tableau Desktop.</p>
+
+    <h3>Key Tableau Prep Steps</h3>
+    <div class="card-grid">
+      <div class="card"><div class="card-icon">📥</div><div class="card-title">Input Step</div><div class="card-desc">Connect to data sources (files, databases, cloud).</div></div>
+      <div class="card"><div class="card-icon">🧹</div><div class="card-title">Clean Step</div><div class="card-desc">Remove nulls, fix data types, rename fields, filter rows.</div></div>
+      <div class="card"><div class="card-icon">🔗</div><div class="card-title">Join Step</div><div class="card-desc">Combine tables using joins (inner, left, right, full).</div></div>
+      <div class="card"><div class="card-icon">📚</div><div class="card-title">Union Step</div><div class="card-desc">Stack rows from multiple tables with same structure.</div></div>
+      <div class="card"><div class="card-icon">📊</div><div class="card-title">Aggregate Step</div><div class="card-desc">Group data and compute aggregated metrics.</div></div>
+      <div class="card"><div class="card-icon">🔄</div><div class="card-title">Pivot Step</div><div class="card-desc">Pivot columns to rows or rows to columns (reshape).</div></div>
+      <div class="card"><div class="card-icon">📤</div><div class="card-title">Output Step</div><div class="card-desc">Save as .hyper extract, CSV, or publish to Tableau Server.</div></div>
+    </div>
+
+    <h3>Common Cleaning Tasks</h3>
+    <div class="badge-list">
+      <span class="badge outline">Handle Nulls</span>
+      <span class="badge outline">Trim Whitespace</span>
+      <span class="badge outline">Change Data Types</span>
+      <span class="badge outline">Rename Fields</span>
+      <span class="badge outline">Split Columns</span>
+      <span class="badge outline">Merge Fields</span>
+      <span class="badge outline">Filter Rows</span>
+      <span class="badge outline">Remove Duplicates</span>
+      <span class="badge outline">Create Calculated Fields</span>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 12 ══ -->
+  <div class="section" id="s12">
+    <div class="section-header">
+      <div class="section-num">12</div>
+      <h2>Publishing & Sharing</h2>
+    </div>
+
+    <h3>Publishing Options</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Platform</th><th>Description</th><th>Audience</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Tableau Cloud</strong></td><td>SaaS platform; publish & share dashboards</td><td>Business teams</td></tr>
+          <tr><td><strong>Tableau Server</strong></td><td>On-premise; full admin control</td><td>Enterprise IT</td></tr>
+          <tr><td><strong>Tableau Public</strong></td><td>Free, publicly accessible</td><td>Portfolios, journalism</td></tr>
+          <tr><td><strong>Export to PDF/Image</strong></td><td>Static snapshot of view</td><td>Reports, presentations</td></tr>
+          <tr><td><strong>Download Data</strong></td><td>Export underlying or summary data as CSV/Excel</td><td>Ad-hoc analysis</td></tr>
+          <tr><td><strong>Embed in Web</strong></td><td>Use JavaScript API to embed in websites/apps</td><td>Developers</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Row-Level Security (RLS)</h3>
+    <p>Restrict data access per user. Use <strong>User Functions</strong> like <code>USERNAME()</code> or <code>USERDOMAIN()</code> in calculated fields and data source filters to filter data based on who is viewing the dashboard.</p>
+
+    <div class="code-block">
+      <span class="cm">// RLS Calculated Field Example</span><br/>
+      [Region] = <span class="fn">LOOKUP</span>(<span class="fn">USERNAME</span>(), [User-Region Mapping])
+    </div>
+
+    <h3>Scheduling Extracts & Subscriptions</h3>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-text">Publish workbook/data source to Tableau Cloud or Server</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">Go to Data Sources tab → select the extract → Schedule Refresh</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text">Set frequency: Hourly, Daily, Weekly</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-text">Set up email Subscriptions to send dashboard snapshots on a schedule</div></div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 13 ══ -->
+  <div class="section" id="s13">
+    <div class="section-header">
+      <div class="section-num">13</div>
+      <h2>Performance & Best Practices</h2>
+    </div>
+
+    <h3>Performance Tips</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Area</th><th>Best Practice</th></tr></thead>
+        <tbody>
+          <tr><td>Data Source</td><td>Use Extracts (.hyper) instead of Live for large datasets</td></tr>
+          <tr><td>Data Source</td><td>Push aggregation to database with custom SQL or views</td></tr>
+          <tr><td>Calculations</td><td>Prefer FIXED LOD over complex joins; avoid nested LODs</td></tr>
+          <tr><td>Calculations</td><td>Use native aggregations instead of row-level calculations</td></tr>
+          <tr><td>Filters</td><td>Use Context Filters for Top N; apply Data Source Filters early</td></tr>
+          <tr><td>Dashboards</td><td>Limit to 3–5 sheets per dashboard; avoid too many filters</td></tr>
+          <tr><td>Dashboards</td><td>Use worksheet actions instead of quick filters for interactivity</td></tr>
+          <tr><td>Marks</td><td>Keep mark count under 100K for rendering performance</td></tr>
+          <tr><td>Maps</td><td>Use Polygon maps sparingly; prefer symbol maps for large data</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Design Best Practices</h3>
+    <div class="card-grid">
+      <div class="card"><div class="card-icon">🎯</div><div class="card-title">Start with a Question</div><div class="card-desc">Define the business question before building any chart.</div></div>
+      <div class="card"><div class="card-icon">🎨</div><div class="card-title">Colour Wisely</div><div class="card-desc">Use colour for meaning (sequential, diverging, categorical), not decoration.</div></div>
+      <div class="card"><div class="card-icon">✂️</div><div class="card-title">Reduce Clutter</div><div class="card-desc">Remove gridlines, borders, and tooltips that don't add value.</div></div>
+      <div class="card"><div class="card-icon">📐</div><div class="card-title">Consistent Formatting</div><div class="card-desc">Use one font family, aligned axis labels, and consistent date formats.</div></div>
+    </div>
+
+    <h3>Performance Recording</h3>
+    <p>Use <em>Help → Settings and Performance → Start Performance Recording</em> to identify slow queries, layout rendering, and data computation bottlenecks.</p>
+  </div>
+
+  <!-- ══ SECTION 14 ══ -->
+  <div class="section" id="s14">
+    <div class="section-header">
+      <div class="section-num">14</div>
+      <h2>Quick Reference Cheat Sheet</h2>
+    </div>
+
+    <h3>Keyboard Shortcuts</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Shortcut</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td><code>Ctrl + Z</code></td><td>Undo</td></tr>
+          <tr><td><code>Ctrl + Shift + Z</code></td><td>Redo</td></tr>
+          <tr><td><code>Ctrl + D</code></td><td>Duplicate Sheet</td></tr>
+          <tr><td><code>Ctrl + E</code></td><td>Open Calculated Field editor</td></tr>
+          <tr><td><code>Ctrl + W</code></td><td>Close current sheet</td></tr>
+          <tr><td><code>Ctrl + L</code></td><td>Clear Sheet</td></tr>
+          <tr><td><code>Ctrl + Shift + B</code></td><td>Show/Hide toolbar</td></tr>
+          <tr><td><code>F5</code></td><td>Refresh Data Source</td></tr>
+          <tr><td><code>Alt + Drag</code></td><td>Move a field without replacing</td></tr>
+          <tr><td><code>Ctrl + Click</code></td><td>Multi-select marks</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Key Terminology</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Term</th><th>Definition</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Mark</strong></td><td>A single data point on the view (bar, circle, line point)</td></tr>
+          <tr><td><strong>VizQL</strong></td><td>Tableau's query language that translates drag-and-drop into queries</td></tr>
+          <tr><td><strong>Granularity</strong></td><td>Level of detail at which data is displayed in the view</td></tr>
+          <tr><td><strong>Pill</strong></td><td>A field placed on a shelf; blue = discrete, green = continuous</td></tr>
+          <tr><td><strong>Set</strong></td><td>A custom field defining a subset of members based on conditions</td></tr>
+          <tr><td><strong>Group</strong></td><td>Combine dimension members into custom high-level categories</td></tr>
+          <tr><td><strong>Hierarchy</strong></td><td>Drill-down levels (e.g., Year → Quarter → Month → Day)</td></tr>
+          <tr><td><strong>Alias</strong></td><td>Rename a dimension member for display purposes</td></tr>
+          <tr><td><strong>Bin</strong></td><td>Bucket numeric values into ranges for histograms</td></tr>
+          <tr><td><strong>Tooltip</strong></td><td>Pop-up information when hovering over a mark</td></tr>
+          <tr><td><strong>Trellis / Small Multiples</strong></td><td>Grid of charts using Pages shelf or layout containers</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="highlight">
+      <h4>🚀 Remember – The Golden Rule of Tableau</h4>
+      <p>Always ask: <em>"What question does this visualisation answer?"</em> Every design choice — chart type, colour, filter, layout — should serve that question. Data tells a story; your job is to make it clear.</p>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <p>Prepared by <strong>Sameeksha</strong> &nbsp;|&nbsp; Tableau Complete Notes &nbsp;|&nbsp; <strong>2026</strong></p>
+  <p style="margin-top:8px; font-size:12px;">Business Intelligence & Data Analytics &nbsp;·&nbsp; All rights reserved</p>
+</footer>
+
+</body>
+</html>
